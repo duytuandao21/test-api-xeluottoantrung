@@ -16,6 +16,7 @@ import helmet from '@fastify/helmet';
 
 import { AppModule } from './app.module.js';
 import { PinoLoggerService } from './common/logging/pino-logger.service.js';
+import { safeErrorDetails } from './common/logging/safe-error-details.js';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -119,7 +120,7 @@ async function bootstrap() {
 
 if (process.env.NODE_ENV !== 'test') {
   bootstrap().catch((error: unknown) => {
-    console.error('API bootstrap failed', error);
+    console.error('API bootstrap failed', safeErrorDetails(error));
     process.exitCode = 1;
   });
 }
