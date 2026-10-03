@@ -98,14 +98,11 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
 
-  SwaggerModule.setup(
-    'api/docs',
-    app,
-    () => SwaggerModule.createDocument(app, swagger),
-    {
-      useGlobalPrefix: false,
-    },
-  );
+  const document = SwaggerModule.createDocument(app, swagger);
+
+  SwaggerModule.setup('api/docs', app, document, {
+    useGlobalPrefix: false,
+  });
 
   const port = Number(process.env.PORT ?? 4000);
 
