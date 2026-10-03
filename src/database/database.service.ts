@@ -10,7 +10,12 @@ export class DatabaseService implements OnModuleDestroy {
   readonly db: NodePgDatabase<typeof schema>;
 
   constructor(@Inject(ConfigService) config: ConfigService) {
-    this.pool = new Pool({ connectionString: config.getOrThrow<string>('DATABASE_URL'), max: 10, idleTimeoutMillis: 30_000 });
+    this.pool = new Pool({
+      connectionString: config.getOrThrow<string>('DATABASE_URL'),
+      max: 3,
+      idleTimeoutMillis: 10_000,
+      connectionTimeoutMillis: 5_000,
+    });
     this.db = drizzle(this.pool, { schema });
   }
 

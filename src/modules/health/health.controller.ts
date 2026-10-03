@@ -19,8 +19,8 @@ export class HealthController {
     try {
       await this.database.ping();
       return { status: 'ok', database: 'ok' };
-    } catch {
-      throw new ServiceUnavailableException('Database is unavailable');
+    } catch (error) {
+      throw new ServiceUnavailableException('Database is unavailable', { cause: error });
     }
   }
 }
