@@ -12,7 +12,7 @@ export class DatabaseService implements OnModuleDestroy {
   constructor(@Inject(ConfigService) config: ConfigService) {
     this.pool = new Pool({
       connectionString: config.getOrThrow<string>('DATABASE_URL'),
-      max: 3,
+      max: 1,
       idleTimeoutMillis: 10_000,
       connectionTimeoutMillis: 5_000,
     });
